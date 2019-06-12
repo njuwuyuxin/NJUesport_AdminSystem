@@ -1,13 +1,17 @@
 <template>
   <div class="Frame">
-      <div>main page</div>
-      <div>请输入密码</div>
-      <input type="text" v-model="password">
-      <button v-on:click="getActivities">提交</button>
+        <div class="itemBox">
+            <div>main page</div>
+            <div>请输入密码</div>
+            <input type="text" v-model="password">
+            <button v-on:click="getActivities">提交</button>
+            <Item v-for="item in activities" v-bind:ItemInfo="item" :key="item.id"></Item>
+        </div>
   </div>
 </template>
 
 <script>
+import Item from './utils/item'
 export default {
   name: 'AdminPage',
   data(){
@@ -38,6 +42,9 @@ export default {
         })(this);
     }
   },
+  components:{
+      Item,
+  },
   mounted(){
     //   this.getActivities();
   }
@@ -47,6 +54,12 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
 .Frame{
-
+    position: relative;
+}
+.itemBox{
+    position: absolute;
+    left:50%;
+    margin:-500px;
+    margin-top:50px;
 }
 </style>
