@@ -1,6 +1,9 @@
 <template>
   <div class="Frame">
       <div>main page</div>
+      <div>请输入密码</div>
+      <input type="text" v-model="password">
+      <button v-on:click="getActivities">提交</button>
   </div>
 </template>
 
@@ -9,16 +12,18 @@ export default {
   name: 'AdminPage',
   data(){
       return{
-          activities:[]
+          password:"",
+          activities:[],
       }
   },
   methods:{
     getActivities:function(){
         (function(_this){
+            console.log(_this.password);
             _this.$axios
             .post(
                 "api/admin/getActivitiesList",	//dev
-                {password:'fanyicheng'}
+                {password:_this.password}
             )
             .then(function(response) {
                 var data=response.data;
@@ -34,7 +39,7 @@ export default {
     }
   },
   mounted(){
-      this.getActivities();
+    //   this.getActivities();
   }
 }
 </script>
