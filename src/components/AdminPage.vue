@@ -1,9 +1,8 @@
 <template>
   <div class="Frame">
         <div class="itemBox">
-            <div>main page</div>
             <div>请输入密码</div>
-            <input type="text" v-model="password">
+            <input type="password" v-model="password">
             <button v-on:click="getActivities">提交</button>
             <Item v-for="item in activities" v-bind:ItemInfo="item" :key="item.id"></Item>
         </div>
@@ -22,17 +21,21 @@ export default {
   },
   methods:{
     getActivities:function(){
+        this.activities = [];
         (function(_this){
             console.log(_this.password);
             _this.$axios
             .post(
                 "api/admin/getActivitiesList",	//dev
+                // "https://njuesport.club:8030/admin/getActivitiesList",
                 {password:_this.password}
             )
             .then(function(response) {
                 var data=response.data;
-                for(var i=0;i<data.length;i++)
+                for(var i=0;i<data.length;i++){
+                    data[i].date=data[i].date.slice(0,10);
                     _this.activities.push(data[i]);
+                }
                 console.log(_this.activities);
             })
             .catch(function(error) {

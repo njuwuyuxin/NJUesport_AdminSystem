@@ -6,28 +6,29 @@
         </div>
         <div class="line">
             <span class="head">标题</span>
-            <span class="content">{{ItemInfo.title}}</span>
+            <input type="text" v-model="ItemInfo.title">
         </div>
         <div class="line">
             <span class="head">标签</span>
-            <span class="content">{{ItemInfo.tag}}</span>
+            <input type="text" v-model="ItemInfo.tag">
         </div>
         <div class="line">
             <span class="head">日期</span>
-            <span class="content">{{ItemInfo.date}}</span>
+            <input type="text" v-model="ItemInfo.date">
         </div>
         <div class="line">
             <span class="head">链接</span>
-            <span class="content">{{ItemInfo.href}}</span>
+            <input type="text" v-model="ItemInfo.href">
         </div>
         <div class="line">
             <span class="head">图片</span>
-            <span class="content">{{ItemInfo.coverPic}}</span>
+            <input type="text" v-model="ItemInfo.coverPic">
         </div>
         <div class="line">
             <span class="head">简介</span>
-            <span class="content">{{ItemInfo.content}}</span>
-        </div>     
+            <input type="text" v-model="ItemInfo.content">
+        </div>
+        <button v-on:click="submitEdit">提交修改</button>
   </div>
 </template>
 
@@ -40,7 +41,30 @@ export default {
     }
   },
   props:{
-      ItemInfo:Object,
+    ItemInfo:Object,
+  },
+  methods:{
+    submit:function(){
+        console.log(this.ItemInfo);
+    },
+    submitEdit:function(){
+        (function(_this){
+            console.log(_this.ItemInfo);
+            _this.$axios
+            .post(
+                // "api/admin/editActivities",	//dev
+                "https://njuesport.club:8000/admin/editActivities",
+                _this.ItemInfo
+            )
+            .then(function(response) {
+                alert("修改成功");
+            })
+            .catch(function(error) {
+                console.log(error);
+                alert("修改失败，可能后端服务未开启，请联系管理员");
+            });
+        })(this);
+    }
   }
 }
 </script>
@@ -65,5 +89,13 @@ export default {
     width: 100%;
     overflow: hidden;
 }
-
+button{
+    width: 50px;
+    height:30px;
+}
+input{
+    border:0px;
+    font-size: 16px;
+    width:940px;
+}
 </style>
